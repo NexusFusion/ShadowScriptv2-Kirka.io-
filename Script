@@ -1,111 +1,198 @@
 // ==UserScript==
-// @name         Kirka.io Mod Menu
-// @namespace    http://tampermonkey.net/
+// @name         Kirka.io Super Mod Menu
+// @namespace    Script Runner Pro
 // @version      1.0
-// @description  Enhance your Kirka.io gaming experience with this mod menu!
+// @description  Super mod menu for Kirka.io
 // @author       NexusFusion
-// @match        https://kirka.io/
+// @match        https://kirka.io/*
 // @grant        none
 // ==/UserScript==
 
 (function() {
     'use strict';
 
-    // Function to toggle mod menu visibility
-    function toggleModMenu() {
-        if (modMenuContainer.style.display === 'none') {
-            modMenuContainer.style.display = 'block';
-        } else {
-            modMenuContainer.style.display = 'none';
+    // Styles for the mod menu
+    const modMenuStyles = `
+        #modMenu {
+            position: fixed;
+            top: 50px;
+            left: 50px;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+            cursor: move;
+            transition: opacity 0.3s ease-in-out; /* Added transition for smooth hiding */
         }
-    }
-
-    // Function to toggle God Mode
-    let godModeEnabled = false;
-    function toggleGodMode() {
-        godModeEnabled = !godModeEnabled;
-        if (godModeEnabled) {
-            alert('God Mode enabled!');
-            makePlayerInvincible();
-        } else {
-            alert('God Mode disabled!');
-            makePlayerVulnerable();
+        #modMenu h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid white;
+            padding-bottom: 5px;
+            cursor: default;
         }
-    }
-
-    // Function to make the player invincible
-    function makePlayerInvincible() {
-        // Assuming player health is managed by the game
-        // Set player health to a very high value or make it infinite
-        window.playerHealth = Infinity;
-    }
-
-    // Function to make the player vulnerable
-    function makePlayerVulnerable() {
-        // Reset player health to the default value
-        window.playerHealth = 100;
-    }
-
-    // Function to increase player speed
-    function increaseSpeed() {
-        // Assuming player speed is managed by the game
-        // Increase player speed by modifying the game's speed variable
-        window.playerSpeed += 1;
-    }
-
-    // Create the mod menu button
-    const modMenuButton = document.createElement('div');
-    modMenuButton.innerHTML = 'Mod Menu';
-    modMenuButton.style.position = 'absolute';
-    modMenuButton.style.top = '20px';
-    modMenuButton.style.left = '20px';
-    modMenuButton.style.padding = '10px';
-    modMenuButton.style.background = '#333';
-    modMenuButton.style.color = '#fff';
-    modMenuButton.style.cursor = 'pointer';
-    modMenuButton.style.zIndex = '9999';
-    modMenuButton.addEventListener('click', toggleModMenu);
-    document.body.appendChild(modMenuButton);
-
-    // Create the mod menu container
-    const modMenuContainer = document.createElement('div');
-    modMenuContainer.style.position = 'fixed';
-    modMenuContainer.style.top = '50%';
-    modMenuContainer.style.left = '50%';
-    modMenuContainer.style.transform = 'translate(-50%, -50%)';
-    modMenuContainer.style.background = '#fff';
-    modMenuContainer.style.border = '2px solid #333';
-    modMenuContainer.style.padding = '20px';
-    modMenuContainer.style.display = 'none';
-    modMenuContainer.style.zIndex = '9999';
-    document.body.appendChild(modMenuContainer);
-
-    // Add mod menu options
-    const options = [
-        {
-            label: 'Teleport to Center',
-            action: function() {
-                window.scrollTo(window.innerWidth / 2, window.innerHeight / 2);
-            }
-        },
-        {
-            label: 'Toggle God Mode',
-            action: toggleGodMode
-        },
-        {
-            label: 'Increase Speed',
-            action: increaseSpeed
+        .modOption {
+            margin-bottom: 10px;
         }
-        // Add more options as needed...
-    ];
+        .modOption label {
+            display: block;
+            cursor: pointer;
+        }
+        .modOption input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        #miniMap {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: 200px;
+            height: 200px;
+            background-color: rgba(0, 0, 0, 0.5);
+            border: 2px solid #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            z-index: 9998;
+        }
+        #playerMarker {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            transition: all 0.3s ease-in-out;
+        }
+    `;
 
-    // Create mod menu buttons for each option
-    options.forEach(option => {
-        const button = document.createElement('button');
-        button.innerHTML = option.label;
-        button.style.margin = '5px';
-        button.addEventListener('click', option.action);
-        modMenuContainer.appendChild(button);
+    // Inject styles
+    const styleElement = document.createElement('style');
+    styleElement.textContent = modMenuStyles;
+    document.head.appendChild(styleElement);
+
+    // Create and inject the mod menu HTML
+    const modMenuHTML = `
+        <div id="modMenu">
+            <h2>Kirka.io Super Mod Menu</h2>
+            <div class="modOption">
+                <label><input type="checkbox" id="godModeCheckbox"> Enable God Mode</label>
+            </div>
+            <div class="modOption">
+                <label><input type="checkbox" id="unlimitedAmmoCheckbox"> Unlimited Ammo</label>
+            </div>
+            <div class="modOption">
+                <label><input type="checkbox" id="superSpeedCheckbox"> Super Speed</label>
+            </div>
+            <div class="modOption">
+                <label><input type="checkbox" id="invisibleCheckbox"> Become Invisible</label>
+            </div>
+            <div class="modOption">
+                <label><input type="checkbox" id="teleportCheckbox"> Teleport</label>
+            </div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', modMenuHTML);
+
+    // Create and inject the minimap HTML
+    const miniMapHTML = `
+        <div id="miniMap">
+            <div id="playerMarker"></div>
+        </div>
+    `;
+    document.body.insertAdjacentHTML('beforeend', miniMapHTML);
+
+    // Mod menu functionality
+    const godModeCheckbox = document.getElementById('godModeCheckbox');
+    const unlimitedAmmoCheckbox = document.getElementById('unlimitedAmmoCheckbox');
+    const superSpeedCheckbox = document.getElementById('superSpeedCheckbox');
+    const invisibleCheckbox = document.getElementById('invisibleCheckbox');
+    const teleportCheckbox = document.getElementById('teleportCheckbox');
+    const modMenu = document.getElementById('modMenu'); // Get mod menu element
+    let menuVisible = true; // Initially, the menu is visible
+
+    godModeCheckbox.addEventListener('change', function() {
+        // Implement god mode functionality
     });
+
+    unlimitedAmmoCheckbox.addEventListener('change', function() {
+        // Implement unlimited ammo functionality
+    });
+
+    superSpeedCheckbox.addEventListener('change', function() {
+        // Implement super speed functionality
+    });
+
+    invisibleCheckbox.addEventListener('change', function() {
+        // Implement invisibility functionality
+    });
+
+    teleportCheckbox.addEventListener('change', function() {
+        // Implement teleport functionality
+    });
+
+    // Make the mod menu draggable
+    let offsetX, offsetY;
+
+    modMenu.addEventListener('mousedown', startDrag);
+
+    function startDrag(e) {
+        e.preventDefault();
+        offsetX = e.clientX - modMenu.getBoundingClientRect().left;
+        offsetY = e.clientY - modMenu.getBoundingClientRect().top;
+        document.addEventListener('mousemove', dragMenu);
+        document.addEventListener('mouseup', stopDrag);
+    }
+
+    function dragMenu(e) {
+        modMenu.style.left = e.clientX - offsetX + 'px';
+        modMenu.style.top = e.clientY - offsetY + 'px';
+    }
+
+    function stopDrag() {
+        document.removeEventListener('mousemove', dragMenu);
+        document.removeEventListener('mouseup', stopDrag);
+    }
+
+    // Toggle mod menu visibility when '/' key is pressed
+    document.addEventListener('keydown', function(event) {
+        if (event.key === '/') {
+            if (menuVisible) {
+                modMenu.style.opacity = 0;
+                menuVisible = false;
+            } else {
+                modMenu.style.opacity = 1;
+                menuVisible = true;
+            }
+        }
+    });
+
+    // Minimap functionality
+    const playerMarker = document.getElementById('playerMarker');
+    const miniMap = document.getElementById('miniMap');
+
+    // Update player position on the minimap
+    function updateMiniMapPosition(x, y) {
+        const mapWidth = miniMap.offsetWidth;
+        const mapHeight = miniMap.offsetHeight;
+        const playerX = (x / window.innerWidth) * mapWidth;
+        const playerY = (y / window.innerHeight) * mapHeight;
+        playerMarker.style.left = playerX + 'px';
+        playerMarker.style.top = playerY + 'px';
+    }
+
+    // Update player position when the window is resized
+    window.addEventListener('resize', function() {
+        updateMiniMapPosition(window.playerX, window.playerY);
+    });
+
+    // Update player position periodically
+    setInterval(function() {
+        updateMiniMapPosition(window.playerX, window.playerY);
+    }, 1000);
+
+    // Initial update of player position on the minimap
+    updateMiniMapPosition(window.playerX, window.playerY);
 
 })();
