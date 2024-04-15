@@ -3,7 +3,7 @@
 // @namespace    http://tampermonkey.net/
 // @version      1.0
 // @description  Enhance your Kirka.io gaming experience with this mod menu!
-// @author       YourName
+// @author       NexusFusion
 // @match        https://kirka.io/
 // @grant        none
 // ==/UserScript==
