@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         Kirka.io Super Mod Menu
-// @namespace    Script Runner Pro
+// @namespace    http://your.namespace/kirka-mod-menu
 // @version      1.0
 // @description  Super mod menu for Kirka.io
 // @author       NexusFusion
@@ -91,6 +91,9 @@
             <div class="modOption">
                 <label><input type="checkbox" id="teleportCheckbox"> Teleport</label>
             </div>
+            <div class="modOption">
+                <label><input type="checkbox" id="minimapCheckbox"> Show Minimap</label>
+            </div>
         </div>
     `;
     document.body.insertAdjacentHTML('beforeend', modMenuHTML);
@@ -109,8 +112,12 @@
     const superSpeedCheckbox = document.getElementById('superSpeedCheckbox');
     const invisibleCheckbox = document.getElementById('invisibleCheckbox');
     const teleportCheckbox = document.getElementById('teleportCheckbox');
+    const minimapCheckbox = document.getElementById('minimapCheckbox');
     const modMenu = document.getElementById('modMenu'); // Get mod menu element
+    const miniMap = document.getElementById('miniMap'); // Get minimap element
+    const playerMarker = document.getElementById('playerMarker'); // Get player marker element
     let menuVisible = true; // Initially, the menu is visible
+    let minimapVisible = true; // Initially, the minimap is visible
 
     godModeCheckbox.addEventListener('change', function() {
         // Implement god mode functionality
@@ -118,6 +125,11 @@
 
     unlimitedAmmoCheckbox.addEventListener('change', function() {
         // Implement unlimited ammo functionality
+        if (unlimitedAmmoCheckbox.checked) {
+            window.Player.prototype.weapon.ammo.max = Infinity;
+        } else {
+            window.Player.prototype.weapon.ammo.max = 10;
+        }
     });
 
     superSpeedCheckbox.addEventListener('change', function() {
@@ -126,10 +138,27 @@
 
     invisibleCheckbox.addEventListener('change', function() {
         // Implement invisibility functionality
+        const player = document.getElementById('player');
+        if (invisibleCheckbox.checked) {
+            player.style.visibility = 'hidden';
+        } else {
+            player.style.visibility = 'visible';
+        }
     });
 
     teleportCheckbox.addEventListener('change', function() {
         // Implement teleport functionality
+    });
+
+    minimapCheckbox.addEventListener('change', function() {
+        // Toggle minimap visibility
+        if (minimapCheckbox.checked) {
+            miniMap.style.display = 'block';
+            minimapVisible = true;
+        } else {
+            miniMap.style.display = 'none';
+            minimapVisible = false;
+        }
     });
 
     // Make the mod menu draggable
@@ -168,31 +197,26 @@
         }
     });
 
-    // Minimap functionality
-    const playerMarker = document.getElementById('playerMarker');
-    const miniMap = document.getElementById('miniMap');
+    // Update minimap position
+    function updateMiniMapPosition() {
+        const rect = miniMap.getBoundingClientRect();
+        const playerRect = document.getElementById('rect');
+        const miniMapWidth = rect.width;
+        const miniMapHeight = rect.height;
+        const playerX = playerRect.x / window.innerWidth * miniMapWidth;
+        const playerY = playerRect.y / window.innerHeight * miniMapHeight;
 
-    // Update player position on the minimap
-    function updateMiniMapPosition(x, y) {
-        const mapWidth = miniMap.offsetWidth;
-        const mapHeight = miniMap.offsetHeight;
-        const playerX = (x / window.innerWidth) * mapWidth;
-        const playerY = (y / window.innerHeight) * mapHeight;
         playerMarker.style.left = playerX + 'px';
         playerMarker.style.top = playerY + 'px';
     }
 
-    // Update player position when the window is resized
-    window.addEventListener('resize', function() {
-        updateMiniMapPosition(window.playerX, window.playerY);
-    });
+    // Update minimap position on window resize
+    window.addEventListener('resize', updateMiniMapPosition);
 
-    // Update player position periodically
-    setInterval(function() {
-        updateMiniMapPosition(window.playerX, window.playerY);
-    }, 1000);
+    // Update minimap position periodically
+    setInterval(updateMiniMapPosition, 1000);
 
-    // Initial update of player position on the minimap
-    updateMiniMapPosition(window.playerX, window.playerY);
+    // Initial update of minimap position
+    updateMiniMapPosition();
 
 })();
