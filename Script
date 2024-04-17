@@ -2,7 +2,7 @@
 // @name         ShadowScriptv3
 // @namespace    http://tampermonkey.net/
 // @version      3.0
-// @description  try to take over the world!
+// @description  Best Mod For Kirka.IO
 // @author       NexusFusion
 // @match        *://kirka.io/*
 // @match        *://pastebin.com/*
