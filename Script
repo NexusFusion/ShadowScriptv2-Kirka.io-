@@ -1,7 +1,7 @@
 // ==UserScript==
-// @name         ShadowScriptv2
+// @name         ShadowScriptv3
 // @namespace    http://tampermonkey.net/
-// @version      2.0
+// @version      3.0
 // @description  try to take over the world!
 // @author       NexusFusion
 // @match        *://kirka.io/*
@@ -9,59 +9,124 @@
 // @icon         data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==
 // @grant        none
 // ==/UserScript==
-
 document.addEventListener("keydown", function (e) {
-  if (e.key == "/") {
-    let d = document.getElementById('mod-menu')
-    if (d.style.display == 'none') {
-      d.style.display = "block"
-    } else {
-      d.style.display = "none"
+    if (e.key == "/") {
+        let d = document.getElementById('mod-menu');
+        if (d.style.display == 'none') {
+            d.style.display = "block";
+        } else {
+            d.style.display = "none";
+        }
     }
-  }
-})
+});
 
 let inHTML = `
 <style>
 #mod-menu {
-  position: fixed;
-  top: 0; /* Adjusted to top */
-  left: 0; /* Adjusted to left */
-  width: 270px;
-  height: 300px;
-  background-color: #333;
-  border-radius: 3px;
-  padding: 20px;
-  font-family: Arial, sans-serif;
-  z-index: 9999999;
-  transition: top 0.5s ease;
+    position: fixed; /* Changed from 'absolute' to 'fixed' */
+    top: 0;
+    left: 0;
+    width: 270px;
+    height: 300px;
+    background-color: #333;
+    border-radius: 3px;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    z-index: 9999999;
 }
 
-#mod-menu:hover {
-  top: 0; /* Adjusted to top */
+p {
+    text-align: center;
+    color: #fff;
+    font-size: 10px;
+    margin-top: -7px;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
 }
-/* Rest of the CSS styles remain the same */
 
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+#search-input {
+    color: #fff;
+    border: none;
+    width: 115%;
+    margin-left: -7.5%;
+    margin-top: -5%;
+    padding: 5px;
+    background-color: #555;
+}
+
+::placeholder {
+    color: white;
+}
+
+#dropdown-list {
+    width: 115%;
+    margin-left: -7.5%;
+    position: relative;
+    display: none;
+}
+
+#items-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    border-radius: 0 0 4px 4px;
+    background-color: #333;
+    color: white;
+    height: 270px;
+    overflow-y: auto;
+}
+
+#items-list li {
+    padding: 5px;
+    cursor: pointer;
+}
+
+#items-list li:hover {
+    background-color: #222;
+}
+
+#search-input:focus {
+    outline: none;
+}
 </style>
 
 <div id="mod-menu">
-  <p>ShadowScriptv2</p>
-  <input type="text" id="search-input" autocomplete="off" placeholder="Command Bar (;)">
-  <div id="dropdown-list">
-    <ul id="items-list">
-      <!-- Command items -->
-    </ul>
-  </div>
+    <p>ShadowScriptv3</p>
+    <input type="text" id="search-input" autocomplete="off" placeholder="Command Bar (;)">
+    <div id="dropdown-list">
+        <ul id="items-list">
+            <li id="cmd1">/Speed;</li>
+            <li id="cmd2">/Esp;</li>
+            <li id="cmd3">/Chams;</li>
+            <li id="cmd4">/Counter-Recoil+Minimum-Spread+Mid Air Bonus;</li>
+            <li id="cmd5">/Inf-Boost;</li>
+            <li id="cmd6">/Quick-Switch(Keys:[,]);</li>
+            <li id="cmd7">/Parkour Assist;</li>
+            <li id="cmd8">/Weapon-Switch-Nuke(animation);</li>
+            <li id="cmd9">/map-editor;</li>
+            <li id="cmd10">/custom-server;</li>
+            <li id="cmd11">/better-gun-animations;</li>
+            <li id="cmd12">/noclip(Key:X);</li>
+            <li id="cmd13">/custom-css;</li>
+            <li id="cmd14">/remove-map;</li>
+        </ul>
+    </div>
 </div>
 `;
 
 let elem = document.createElement("div");
 elem.innerHTML = inHTML;
 document.body.appendChild(elem);
-  let inHTML2 = `
-  <style>
-  .modal {
-  display:none;
+let inHTML2 = `
+<style>
+.modal {
+    display:none;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -75,98 +140,116 @@ document.body.appendChild(elem);
     z-index: 9999;
     cursor: default;
     overflow: auto;
-  }
+}
 
-  .modal-header {
+.modal-header {
     display: flex;
     justify-content: flex-end;
-  }
+}
 
-  .modal-header button {
+.modal-header button {
     cursor: pointer;
     color: #fff;
     background-color: transparent;
     border: none;
-  }
+}
 
-  .modal-content {
+.modal-content {
     margin-top: 20px;
-  }
+}
 
-  .draggable-area {
+.draggable-area {
     cursor: move;
     text-align: center;
     font-size: 24px;
     margin-bottom: 20px;
-  }
+}
 
-  .slider-label {
+.slider-label {
     text-align: center;
     margin-bottom: 10px;
-  }
+}
 
-  .slider-input {
+.slider-input {
     width: 100%;
     margin-bottom: 10px;
-  }
+}
 
-  .button-align {
+.button-align {
     display: flex;
     justify-content: center;
     margin-top: 20px;
-  }
+}
 
-  .button-align button {
+.button-align button {
     margin: 0 10px;
     padding: 10px 20px;
     color: #fff;
     background-color: #777;
     border: none;
     cursor: pointer;
-  }
-  .li-items {
-  list-style-type: none;
-  padding: 0;
-  margin: 2%;
-  border-radius: 4px;
-  background-color: #222;
-  color:white;
-  max-height: 200px;
-  overflow-y: auto;
+}
+.li-items {
+    list-style-type: none;
+    padding: 0;
+    margin: 2%;
+    border-radius: 4px;
+    background-color: #222;
+    color:white;
+    max-height: 200px;
+    overflow-y: auto;
 }
 </style>
 </head>
 <body>
-  <div class="modal" id="modal">
+<div class="modal" id="modal">
     <div class="modal-header">
-      <button id="close-btn">X</button>
+        <button id="close-btn">X</button>
     </div>
     <div class="modal-content">
-      <h2 class="draggable-area">MAP-EDITOR</h2>
-      <p class="slider-label">FOV</p>
-      <input type="range" id="MAP-Z" name="MAPZ" min="1" max="20" class="slider-input">
-      <div class="button-align">
-        <button id="edit-fov">ADD CHANGES</button>
-        <button id="reset-map">RESET CHANGES</button>
-      </div>
-      <ul>
-        <li class="li-items" id="map-shake">/map-shake</li>
-        <li class="li-items" id="night-sky">/night-sky</li>
-        <li class="li-items" id="day-sky">/day-sky</li>
-        <li class="li-items" id="increase-light">/increase-light</li>
-        <li class="li-items" id="decrease-light">/decrease-light</li>
-        <li class="li-items" id="crash-map">/crash-map(beta)</li>
-        <li class="li-items" id="lag-map">/lag-map</li>
-        <li class="li-items" id="break-map">/break-map</li>
-      </ul>
+        <h2 class="draggable-area">MAP-EDITOR</h2>
+        <p class="slider-label">FOV</p>
+        <input type="range" id="MAP-Z" name="MAPZ" min="1" max="20" class="slider-input">
+        <div class="button-align">
+            <button id="edit-fov">ADD CHANGES</button>
+            <button id="reset-map">RESET CHANGES</button>
+        </div>
+        <ul>
+            <li class="li-items" id="map-shake">/map-shake</li>
+            <li class="li-items" id="night-sky">/night-sky</li>
+            <li class="li-items" id="day-sky">/day-sky</li>
+            <li class="li-items" id="increase-light">/increase-light</li>
+            <li class="li-items" id="decrease-light">/decrease-light</li>
+            <li class="li-items" id="crash-map">/crash-map(beta)</li>
+            <li class="li-items" id="lag-map">/lag-map</li>
+            <li class="li-items" id="break-map">/break-map</li>
+            <li class="li-items" id="remove-map">/remove-map</li>
+        </ul>
     </div>
-  </div>
-</body>
-  `;
+</div>
+`
 
-  let elem2 = document.createElement("div");
-  elem2.innerHTML = inHTML2;
-  document.body.appendChild(elem2);
+let elem2 = document.createElement("div")
+elem2.innerHTML = inHTML2
+document.body.appendChild(elem2)
+
+let inHTML3 = `
+<style>
+#credit {
+    color: #fff;
+    font-size: 14px;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 5px;
+}
+</style>
+
+<p id="credit">Credits: AFRIENDLYHACKER(BATMAN)</p>
+`
+let elem3 = document.createElement("div")
+elem3.innerHTML = inHTML3
+document.body.appendChild(elem3)
 let interval;
 const originalSqrt = Math.sqrt;
 function cmd1() {
