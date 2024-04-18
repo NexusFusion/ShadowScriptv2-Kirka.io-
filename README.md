@@ -1,5 +1,5 @@
-# ShadowScriptv2
-Unlock the full potential of your browsing experience with ShadowScriptv2. Dive into a world where you control the shadows, shaping the digital landscape to your will. From visual enhancements to functional tweaks, this script offers a myriad of features to elevate your online journey. Command your environment with ease using a simple keystroke, toggling a powerful menu to reveal the secrets within.
+# ShadowScriptv3
+Unlock the full potential of your browsing experience with ShadowScriptv3. Dive into a world where you control the shadows, shaping the digital landscape to your will. From visual enhancements to functional tweaks, this script offers a myriad of features to elevate your online journey. Command your environment with ease using a simple keystroke, toggling a powerful menu to reveal the secrets within.
 
 Here are all the features included in ShadowScriptv2:
 
