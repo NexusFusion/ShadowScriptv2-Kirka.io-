@@ -1,35 +1,14 @@
 # ShadowScriptv3
-Unlock the full potential of your browsing experience with ShadowScriptv3. Dive into a world where you control the shadows, shaping the digital landscape to your will. From visual enhancements to functional tweaks, this script offers a myriad of features to elevate your online journey. Command your environment with ease using a simple keystroke, toggling a powerful menu to reveal the secrets within.
-
-Here are all the features included in ShadowScriptv2:
-
-1. **Command Menu**: Press "/" to toggle a sleek command menu, providing quick access to various functionalities.
-
-2. **Visual Enhancements**:
-   - Adjust the hue, brightness, and filters of the webpage to create custom visual effects.
-   - Enable a night sky mode for a darker, more mysterious browsing experience.
-   - Increase or decrease the overall brightness of the page with a single click.
-
-3. **Map Manipulation**:
-   - Shake the map with a toggleable effect, adding dynamic movement to the displayed content.
-   - Crash the map to disrupt its normal functioning, introducing chaos into the digital landscape.
-   - Lag the map to slow down its performance, creating a challenging browsing environment.
-   - Break the map's rendering system, showcasing the script's power to alter core functionalities.
-
-4. **Mathematical Functions**:
-   - Modify mathematical functions like sine, tangent, and square root to achieve unique results.
-   - Alter the behavior of common math functions with custom overrides for creative experimentation.
-
-5. **User Interface Customization**:
-   - Customize the appearance of the browser interface, including backgrounds, buttons, and icons.
-   - Apply blur effects and color adjustments to create a personalized browsing interface.
-
-6. **Modal Dialogs**:
-   - Display modal dialogs with draggable functionality for an intuitive user experience.
-   - Customize modal content and behavior for specific actions, providing user interaction options.
-
-7. **Text Search and Filtering**:
-   - Search and filter through command menu options with a dynamic text input field.
-   - Instantly find and execute desired commands with ease using the search feature.
-
-Each feature adds a layer of depth and versatility to the browsing experience, allowing users to explore and interact with web content in innovative ways.
+•Name: ShadowScriptv3
+•Version: 3.0
+•Author: NexusFusion
+•Description:
+   •Unleash the power of ShadowScriptv3, the ultimate mod for Kirka.IO!
+   •Elevate your gaming experience with a plethora of enhancements and features tailored for Kirka.IO enthusiasts.
+   •Seamlessly integrated into the game interface, ShadowScriptv3 provides effortless access to its arsenal of tools and tweaks.
+   •Dominate the battlefield with commands for speed boosts, ESP, chams, and more, granting you unparalleled advantage.
+   •Customize your gameplay with ease using the intuitive command bar, offering quick toggles and adjustments.
+   •Dive into the world of map editing with a comprehensive suite of tools, allowing you to shape the game environment to your liking.
+   •Immerse yourself in stunning visuals with dynamic sky effects, lighting adjustments, and map shaders, enhancing every moment of gameplay.
+   •Take control of your gaming destiny with ShadowScriptv3, the must-have companion for every Kirka.IO warrior.
+   •Join the ranks of those who dare to push the limits and reign supreme with ShadowScriptv3 by your side.
